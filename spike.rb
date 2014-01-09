@@ -34,20 +34,3 @@ class Monster
 	end
 end
 
-
-hero = Hero.new 10, 3
-monster = Monster.new 2, 4
-until hero.attack(monster) || hero.dead?
-	puts "You missed. Monster dealth #{monster.damage} damage"
-	puts "Your current health is #{hero.health}"
-end
-
-puts "__"
-
-if hero.dead?
-	puts "you lost"
-else
-	puts "you've won"
-end
-
-puts "___"
