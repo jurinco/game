@@ -7,34 +7,36 @@ describe AttackAction do
 	let(:dicepool) { double("dicepool")}
  	let(:monster) { double("monster", toughness: 2, kill: nil, damage: 4)}
 
-	describe "effect" do
-		context "success" do
-			before :each do
-				dicepool.stub(:skill_check).and_return(true)
-			end
-			it "kills monster" do
-				monster.should_receive(:kill)
-				action.activate(monster)
+  describe "effect" do
+    context "success" do
+	  before :each do
+		  dicepool.stub(:skill_check).and_return(true)
+	  end
 
-			end
-			it "rewards owner with exp" do
-				hero.should_receive(:gain_experience)
-				action.activate(monster)
-			end
-			it "rewards owner with gold" do
-				hero.should_receive(:gain_gold)
-				action.activate(monster)
-			end
-		end
+      it "kills monster" do
+        monster.should_receive(:kill)
+        action.activate(monster)
+	  end
 
-		context "failure" do
-			it "damages owner" do
-				dicepool.stub(:skill_check).and_return(false)
-				hero.should_receive(:damage).with(monster.damage)
-				action.activate(monster)
-			end
-		end
-	end
+	  it "rewards owner with exp" do
+        hero.should_receive(:gain_experience)
+        action.activate(monster)
+	  end
+
+	  it "rewards owner with gold" do
+        hero.should_receive(:gain_gold)
+        action.activate(monster)
+	  end
+    end
+
+    context "failure" do
+      it "damages owner" do
+        dicepool.stub(:skill_check).and_return(false)
+        hero.should_receive(:damage).with(monster.damage)
+        action.activate(monster)
+      end
+    end
+  end
 
 	describe "activate" do
 

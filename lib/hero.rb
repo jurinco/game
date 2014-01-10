@@ -19,7 +19,6 @@ class Hero
 
 	def damage(hit)
 		@health -= hit
-		
 	end
 
 	def gain_gold(amount)

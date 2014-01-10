@@ -1,5 +1,6 @@
-class AttackAction
+class FleeAction
   attr_reader :owner, :dicepool  
+
   def initialize(owner, dicepool)
   	@owner = owner
   	@dicepool = dicepool
@@ -7,7 +8,7 @@ class AttackAction
   end  
 
   def activate(target)
-  if dicepool.skill_check(owner.strength, target.toughness)
+  if dicepool.skill_check(owner.stealth, target.notice)
   	success(target)
   else
   	failure(target)
@@ -15,9 +16,6 @@ class AttackAction
   end  
 
   def success(target)
-  	target.kill
-  	owner.gain_experience
-  	owner.gain_gold
   end  
 
   def failure(target)
