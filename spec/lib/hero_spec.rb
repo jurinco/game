@@ -5,7 +5,7 @@ describe Hero do
 	let(:dicepool) { double("dicepool")}
 
 	describe "default attributes" do 
-		let(:hero) { Hero.new dicepool: dicepool }
+		let(:hero) { Hero.new }
 
 		it "has a default strength equal to 3" do 
 			expect(hero.strength).to eq(3)
@@ -17,7 +17,7 @@ describe Hero do
 	end
 
 	it "can be initialized by custom strength" do 
-		hero = Hero.new strength: 3, dicepool: dicepool
+		hero = Hero.new strength: 3
 		expect(hero.strength).to eq(3)
 	end
 
@@ -27,19 +27,19 @@ describe Hero do
 	   end
 
 	   describe "attack attack" do
-	   	it "succeeds" do 
-	   		dicepool.stub(:skill_check).and_return(true)
-	   		hero = Hero.new dicepool: dicepool
-	   		monster = double("monster", toughness: 2)
-	   		expect(hero.attack(monster)).to be_true
+	   	let(:attack_action) {  double("attack_action")}
+	   	let(:hero) { Hero.new actions: {attack: attack_action} }
+
+	   	it "has attack action" do 
+	   		expect(hero.actions[:attack]).to eq(attack_action)
 	   	end
 
-	   	it "fails" do
-	   		dicepool.stub(:skill_check).and_return(false)
-	   		hero = Hero.new dicepool: dicepool
-	   		monster = double("monster", toughness: 2)
-	   		expect(hero.attack(monster)).to be_false
+	   	it "activates attack action" do 
+	   		monster = double("monster")
+	   		attack_action.should_receive(:activate)
+	   		hero.activate_action :attack, monster
 	   	end
+
 
 	   end
 
